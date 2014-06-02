@@ -79,7 +79,7 @@ nova-conf:
         database: 
           connection: mysql://{{ pillar['mysql'][pillar['services']['nova']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['nova']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['nova']['db_name'] }}
     - require: 
-        file: nova-conf
+      - file: nova-conf
 nova-instance-directory: 
   file: 
     - directory
