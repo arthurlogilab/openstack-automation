@@ -1,10 +1,6 @@
 {% for server in pillar['hosts'] %}
 {{ server }}:
-  host
+  host:
     - present
     - ip: {{ pillar['hosts'][server] }}
 {% endfor %}
-salt:
-  host:
-    - present
-    - ip: {{ pillar['hosts']['salt']

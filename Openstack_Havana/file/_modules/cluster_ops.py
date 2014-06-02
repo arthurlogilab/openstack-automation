@@ -62,10 +62,13 @@ def get_vlan_ranges(network_type='flat'):
     return ','.join(physical_iter)
 
 
-def get_bridge_mappings(network_type='flat'):
+def get_bridge_mappings():
     bridge_iter = []
-    for physical_network in __pillar__['neutron']['type_drivers'][network_type].get(__grains__['id'], {}):
-        network_iter = [physical_network, __pillar__['neutron']['type_drivers'][network_type][__grains__['id']][physical_network]['bridge']]
+    for physical_network in __pillar__['neutron']['type_drivers'].get('flat', {}).get(__grains__['id'], {}):
+        network_iter = [physical_network, __pillar__['neutron']['type_drivers']['flat'][__grains__['id']][physical_network]['bridge']]
+        bridge_iter.append(':'.join(network_iter))
+    for physical_network in __pillar__['neutron']['type_drivers'].get('vlan', {}).get(__grains__['id'], {}):
+        network_iter = [physical_network, __pillar__['neutron']['type_drivers']['vlan'][__grains__['id']][physical_network]['bridge']]
         bridge_iter.append(':'.join(network_iter))
     return ','.join(bridge_iter)
 

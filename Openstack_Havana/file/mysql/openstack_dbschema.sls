@@ -3,8 +3,7 @@
   mysql_database:
     - present
     - name: {{ database_name }}
-{% for cluster_component in pillar['install'] %}
-{% for server in pillar[cluster_component] %}
+{% for server in salt['cluster_ops.list_hosts']() %}
 {{ server }}-{{ database_name }}-accounts:
   mysql_user:
     - present
@@ -23,5 +22,3 @@
       - mysql_user: {{ server }}-{{ database_name }}-accounts
 {% endfor %}
 {% endfor %}
-{% endfor %}
-}

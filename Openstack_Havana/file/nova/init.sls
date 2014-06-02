@@ -1,21 +1,21 @@
 nova-api:
   pkg:
     - installed
-  service
+  service:
     - running
-    - watch
+    - watch:
       - ini: nova-conf
 nova-conductor:
   pkg:
     - installed
   service:
     - running
-    - watch
+    - watch:
       - ini: nova-conf
 nova-scheduler:
   pkg:
     - installed
-  service
+  service:
     - running
     - watch:
       - ini: nova-conf
@@ -73,36 +73,36 @@ nova-conf:
     - options_present
     - name: /etc/nova/nova.conf
     - sections: 
-	      DEFAULT: 
-	        auth_strategy: "keystone"
-	        rabbit_host: "{{ salt['cluster_ops.get_candidate']('queue.' + pillar['queue-engine']) }}"
-	        my_ip: "{{ grains['id'] }}"
-	        vncserver_listen: "{{ salt['cluster_ops.get_candidate']('nova') }}"
-	        vncserver_proxyclient_address: "{{ salt['cluster_ops.get_candidate']('nova') }}"
-	        rpc_backend: "{{ pillar['queue-engine'] }}"
-	        network_api_class: "nova.network.neutronv2.api.API"
-	        neutron_url: "http://{{ salt['cluster_ops.get_candidate']('neutron') }}:9696"
-	        neutron_auth_strategy: "keystone"
-	        neutron_admin_tenant_name: "service"
-	        neutron_admin_username: "neutron"
-	        neutron_admin_password: "{{ pillar['keystone']['tenants']['service']['users']['neutron']['password'] }}"
-	        neutron_admin_auth_url: "http://{{ salt['cluster_ops.get_candidate']('keystone') }}:35357/v2.0"
-	        linuxnet_interface_driver: "nova.network.linux_net.LinuxOVSInterfaceDriver"
-	        firewall_driver: "nova.virt.firewall.NoopFirewallDriver"
-	        security_group_api: "neutron"
-	        service_neutron_metadata_proxy: "True"
-	        neutron_metadata_proxy_shared_secret: "{{ pillar['neutron']['metadata_secret'] }}"
-	        vif_plugging_is_fatal: "False"
-	        vif_plugging_timeout: "0"
-	      keystone_authtoken: 
-	        auth_protocol: "http"
-	        admin_user: "nova"
-	        admin_password: "{{ pillar['keystone']['tenants']['service']['users']['nova']['password'] }}"
-	        auth_host: "{{ salt['cluster_ops.get_candidate']('keystone') }}"
-	        auth_uri: "http://{{ salt['cluster_ops.get_candidate']('keystone') }}:5000"
-	        admin_tenant_name: "service"
-	        auth_port: "35357"
-	      database: 
-	        connection: "mysql://{{ pillar['mysql'][pillar['services']['nova']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['nova']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['nova']['db_name'] }}"
+      DEFAULT: 
+        auth_strategy: "keystone"
+        rabbit_host: "{{ salt['cluster_ops.get_candidate']('queue.' + pillar['queue-engine']) }}"
+        my_ip: "{{ grains['id'] }}"
+        vncserver_listen: "{{ salt['cluster_ops.get_candidate']('nova') }}"
+        vncserver_proxyclient_address: "{{ salt['cluster_ops.get_candidate']('nova') }}"
+        rpc_backend: "{{ pillar['queue-engine'] }}"
+        network_api_class: "nova.network.neutronv2.api.API"
+        neutron_url: "http://{{ salt['cluster_ops.get_candidate']('neutron') }}:9696"
+        neutron_auth_strategy: "keystone"
+        neutron_admin_tenant_name: "service"
+        neutron_admin_username: "neutron"
+        neutron_admin_password: "{{ pillar['keystone']['tenants']['service']['users']['neutron']['password'] }}"
+        neutron_admin_auth_url: "http://{{ salt['cluster_ops.get_candidate']('keystone') }}:35357/v2.0"
+        linuxnet_interface_driver: "nova.network.linux_net.LinuxOVSInterfaceDriver"
+        firewall_driver: "nova.virt.firewall.NoopFirewallDriver"
+        security_group_api: "neutron"
+        service_neutron_metadata_proxy: "True"
+        neutron_metadata_proxy_shared_secret: "{{ pillar['neutron']['metadata_secret'] }}"
+        vif_plugging_is_fatal: "False"
+        vif_plugging_timeout: "0"
+      keystone_authtoken: 
+        auth_protocol: "http"
+        admin_user: "nova"
+        admin_password: "{{ pillar['keystone']['tenants']['service']['users']['nova']['password'] }}"
+        auth_host: "{{ salt['cluster_ops.get_candidate']('keystone') }}"
+        auth_uri: "http://{{ salt['cluster_ops.get_candidate']('keystone') }}:5000"
+        admin_tenant_name: "service"
+        auth_port: "35357"
+      database: 
+        connection: "mysql://{{ pillar['mysql'][pillar['services']['nova']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['nova']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['nova']['db_name'] }}"
     - require:
       -file: nova-conf
