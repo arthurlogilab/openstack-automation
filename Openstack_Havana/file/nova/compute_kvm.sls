@@ -41,7 +41,7 @@ nova-conf:
     - password: nova
     - mode: 644
     - require: 
-         pkg: nova-compute
+      - pkg: nova-compute
   ini: 
     - options_present
     - name: /etc/nova/nova.conf

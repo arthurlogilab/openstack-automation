@@ -15,7 +15,8 @@
   mysql_grants:
     - present
     - grant: all
-    - database: {{ database_name }}
+    - database: {{ database_name }}.*
+    - host: {{ server }}
     - user: {{ pillar['mysql'][database_name]['username'] }}
     - password: {{ pillar['mysql'][database_name]['password'] }}
     - require:

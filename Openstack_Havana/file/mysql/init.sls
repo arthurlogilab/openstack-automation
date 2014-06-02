@@ -26,5 +26,5 @@ mysql-server:
     - name: mysql
     - watch: 
         - pkg: mysql-server
-        - ini: mysql-conf-filea
+        - ini: mysql-conf-file
 

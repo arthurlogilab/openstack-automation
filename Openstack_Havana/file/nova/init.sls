@@ -64,6 +64,7 @@ nova_sqlite_delete:
 nova-conf:
   file:
     - managed
+    - name: /etc/nova/nova.conf
     - user: nova
     - group: nova
     - mode: 644

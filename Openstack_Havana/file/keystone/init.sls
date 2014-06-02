@@ -1,8 +1,6 @@
 keystone: 
   pkg: 
     - installed
-    - require: 
-      - mysql_grants: {{ grains['id'] }}-keystone-accounts
   service: 
     - running
     - watch: 
@@ -22,7 +20,7 @@ keystone:
     - sections: 
       DEFAULT: 
         admin_token: {{ pillar['keystone.token'] }}
-      sql: 
+      database: 
         connection: mysql://{{ pillar['mysql'][pillar['services']['keystone']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['keystone']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['keystone']['db_name'] }}
     - require: 
       - file: keystone

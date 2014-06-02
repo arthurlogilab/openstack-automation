@@ -6,7 +6,6 @@ neutron-server:
     - watch: 
         - pkg: neutron-server
         - ini: neutron-server
-        - file: neutron-api-paste
   file: 
     - managed
     - name: /etc/neutron/neutron.conf
