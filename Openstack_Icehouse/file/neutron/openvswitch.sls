@@ -8,6 +8,7 @@ neutron-plugin-openvswitch-agent:
     - watch: 
       - pkg: neutron-plugin-openvswitch-agent
       - ini: neutron-ovs-conf
+      - ini: neutron-plugin-ml2
   file: 
     - managed
     - name: /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
@@ -56,9 +57,3 @@ openvswitch-switch:
     - running
     - require: 
       - pkg: openvswitch-switch
-create_init_bridges: 
-  module: 
-    - run
-    - name: cluster_ops.create_init_bridges
-    - require: 
-      - service: openvswitch-switch

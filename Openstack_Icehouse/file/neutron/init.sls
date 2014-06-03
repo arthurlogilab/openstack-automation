@@ -6,6 +6,7 @@ neutron-server:
     - watch: 
         - pkg: neutron-server
         - ini: neutron-server
+        - ini: neutron-plugin-ml2
   file: 
     - managed
     - name: /etc/neutron/neutron.conf

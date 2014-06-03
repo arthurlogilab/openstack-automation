@@ -6,6 +6,7 @@ neutron-dhcp-agent:
     - watch: 
       - pkg: neutron-dhcp-agent
       - ini: neutron-dhcp-agent
+      - ini: neutron-plugin-ml2
   file: 
     - managed
     - name: /etc/neutron/dhcp_agent.ini
@@ -32,6 +33,7 @@ neutron-metadata-agent:
     - watch: 
       - pkg: neutron-metadata-agent
       - ini: neutron-metadata-agent
+      - ini: neutron-plugin-ml2
   file: 
     - managed
     - name: /etc/neutron/metadata_agent.ini
@@ -62,6 +64,7 @@ neutron-l3-agent:
     - watch: 
       - pkg: neutron-l3-agent
       - ini: neutron-l3-agent
+      - ini: neutron-plugin-ml2
   file: 
     - managed
     - name: /etc/neutron/l3_agent.ini

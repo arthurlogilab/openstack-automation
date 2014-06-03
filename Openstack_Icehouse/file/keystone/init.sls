@@ -18,10 +18,10 @@ keystone:
     - options_present
     - name: /etc/keystone/keystone.conf
     - sections: 
-      DEFAULT: 
-        admin_token: {{ pillar['keystone.token'] }}
-      database: 
-        connection: mysql://{{ pillar['mysql'][pillar['services']['keystone']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['keystone']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['keystone']['db_name'] }}
+        DEFAULT: 
+          admin_token: {{ pillar['keystone.token'] }}
+        database: 
+          connection: mysql://{{ pillar['mysql'][pillar['services']['keystone']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['keystone']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['keystone']['db_name'] }}
     - require: 
       - file: keystone
 keystone_sync: 
