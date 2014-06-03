@@ -61,15 +61,15 @@ intergrationg_bridge:
     - name: "ovs-vsctl add-br {{ pillar['neutron'].get('intergration_bridge', 'br-int') }}"
 {% for network_type in ['vlan', 'flat'] %}
 {% for external_network in pillar['neutron']['type_drivers'].get(network_type, {}).get(grains['id'], {}) %}
-{{ external_network }}-bridge-create:
+{{ network_type }}-{{ external_network }}-bridge-create:
   cmd:
     - run
     - name: "ovs-vsctl add-br {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }}"
-{{ external_network }}-interface-setup:
+{{ network_type }}-{{ external_network }}-interface-setup:
   cmd:
     - run
     - name: "ip link set {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['interface'] }} up promisc on"
-{{ external_network }}-interface-bridge:
+{{ network_type }}-{{ external_network }}-interface-bridge:
   cmd:
     - run
     - name: "ovs-vsctl add-port {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }} {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['interface'] }}"
