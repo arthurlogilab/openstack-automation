@@ -69,5 +69,9 @@ intergrationg_bridge:
   cmd:
     - run
     - name: "ip link set {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['interface'] }} up promisc on"
+{{ external_network }}-interface-bridge:
+  cmd:
+    - run
+    - name: "ovs-vsctl add-port {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }} {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['interface'] }}"
 {% endfor %}
 {% endfor %}
