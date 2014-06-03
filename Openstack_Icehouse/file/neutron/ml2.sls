@@ -36,7 +36,7 @@ neutron-plugin-ml2:
 {% endif %}
 {% if 'flat' in pillar['neutron']['type_drivers'] and grains['id'] in pillar['neutron']['type_drivers']['flat'] %}
         ml2_type_flat:
-          flat_networks: {{ ','.join(pillar['neutron']['type_drivers']['flat'][grains['id']] }}
+          flat_networks: {{ ','.join(pillar['neutron']['type_drivers']['flat'][grains['id']]) }}
 {% endif %}
 {% if 'vlan' in pillar['neutron']['type_drivers'] %}
         ml2_type_vlan: 
