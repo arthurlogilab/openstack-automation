@@ -1,8 +1,8 @@
 neutron-plugin-openvswitch-agent: 
   pkg: 
     - installed
-    - require: 
-      - module: create_init_bridges
+    #- require: 
+      #- module: create_init_bridges
   service: 
     - running
     - watch: 
@@ -15,6 +15,7 @@ neutron-plugin-openvswitch-agent:
     - group: neutron
     - user: neutron
     - mode: 644
+    - makedirs: True
     - require: 
       - pkg: neutron-plugin-openvswitch-agent
 neutron-ovs-conf: 
