@@ -1,23 +1,12 @@
 neutron-plugin-openvswitch-agent: 
   pkg: 
     - installed
-    #- require: 
-      #- module: create_init_bridges
   service: 
     - running
     - watch: 
       - pkg: neutron-plugin-openvswitch-agent
       - ini: neutron-ovs-conf
       - ini: neutron-plugin-ml2
-  file: 
-    - managed
-    - name: /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
-    - group: neutron
-    - user: neutron
-    - mode: 644
-    - makedirs: True
-    - require: 
-      - pkg: neutron-plugin-openvswitch-agent
 neutron-ovs-conf: 
   file: 
     - managed
