@@ -2,10 +2,10 @@ mysql-conf-file:
   file: 
     - managed
     - group: root
-      mode: 644
-      name: /etc/mysql/my.cnf
-      user: root
-      require: 
+    - mode: 644
+    - name: /etc/mysql/my.cnf
+    - user: root
+    - require: 
         - pkg: mysql-server
   ini: 
     - options_present

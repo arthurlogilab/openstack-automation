@@ -15,7 +15,7 @@ neutron-dhcp-agent:
     - mode: 644
     - require: 
       - pkg: neutron-dhcp-agent
-  ini: 
+  ini:
     - options_present
     - name: /etc/neutron/dhcp_agent.ini
     - sections: 
