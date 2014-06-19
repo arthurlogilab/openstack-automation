@@ -35,6 +35,23 @@
 			"name": "deb-src http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main",
 			"file": "/etc/apt/sources.list.d/cloudarchive-havana-src.list"
 		}
+    {% endif %}
+    {% if grains['os'] == 'Debian' %}
+		{
+			"reponame": "havana-cloud-gplhost",
+			"name": "deb http://archive.gplhost.com/debian havana main",
+			"file": "/etc/apt/sources.list.d/havana.gplhost.list",
+                        "key_url": "http://archive.gplhost.com/debian/repository_key.asc"
+
+		},
+		{
+			"reponame": "havana-cloud-gplhost-backports",
+			"name": "deb http://archive.gplhost.com/debian havana-backports main",
+			"file": "/etc/apt/sources.list.d/havana.gplhost.backports.list",
+                        "key_url": "http://archive.gplhost.com/debian/repository_key.asc"
+
+		}
+    {% endif %}
 	],
     "mysql": {
         "nova": {

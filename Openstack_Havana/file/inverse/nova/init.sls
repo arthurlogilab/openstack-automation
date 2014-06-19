@@ -45,7 +45,11 @@
             "purged"
         ]
     },
+    {% if grains['os'] == 'Ubuntu' %}
     "nova-novncproxy": {
+    {% else %}
+    "nova-consoleproxy": {
+    {% endif %}
         "pkg": [
             "purged"
         ]
