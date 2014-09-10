@@ -110,7 +110,8 @@ neutron:
     - "flat"
   tunnel_start: "1"
   tunnel_end: "1000"
-  type_drivers: 
+  debug: "False"
+  type_drivers:
     flat: 
       sun: 
         External: 
@@ -143,6 +144,7 @@ install:
     - "generics.apt-proxy"
     - "generics.headers"
     - "generics.host"
+    - "generics.sources"
     - "mysql"
     - "mysql.client"
     - "mysql.openstack_dbschema"
@@ -160,6 +162,7 @@ install:
     - "generics.apt-proxy"
     - "generics.headers"
     - "generics.host"
+    - "generics.sources"
     - "mysql.client"
     - "neutron.service"
     - "neutron.ml2"
@@ -168,6 +171,7 @@ install:
     - "generics.apt-proxy"
     - "generics.headers"
     - "generics.host"
+    - "generics.sources"
     - "mysql.client"
     - "nova.compute_kvm"
     - "neutron.openvswitch"
@@ -189,4 +193,5 @@ services:
     db_sync: "nova-manage db sync"
   neutron: 
     db_name: "neutron"
-
+  compute:
+    libvirt_cpu_mode: "host-passthrough" # "host-model", "host-passthrough" "custom" and "none"
