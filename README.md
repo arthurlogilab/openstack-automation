@@ -112,17 +112,17 @@ To test it create a new [environment](http://docs.saltstack.com/ref/file_server/
 file_roots: 
   base: 
     - /srv/salt/ 
-  havana: 
+  icehouse: 
     - (project-directory)/file 
 pillar_roots: 
   base: 
     - /srv/pillar 
-  havana: 
+  icehouse: 
     - (project-directory)/pillar 
 
 </pre>
 
-This will add the havana environment to your saltstack. The 'file_roots' will have [state definitions](http://docs.saltstack.com/topics/tutorials/starting_states.html "Salt States") in a bunch of '.sls' files and the few special directories, while the 'pillar_roots' has your cluster definition. 
+This will add the icehouse environment to your saltstack. The 'file_roots' will have [state definitions](http://docs.saltstack.com/topics/tutorials/starting_states.html "Salt States") in a bunch of '.sls' files and the few special directories, while the 'pillar_roots' has your cluster definition. 
 
 At this stage I assume that you have two machines 'mercury' and 'venus' (these are their hostnames as well as their minion id) added to the salt master. See [setting up salt minion](http://docs.saltstack.com/topics/tutorials/walkthrough.html#setting-up-a-salt-minion "minion setup") to add minions to the master. The pillar definition file shown at the begining has a key 'cluster_type'. We will use this key to deliver commands to the two machines alone like so.
 
@@ -281,7 +281,7 @@ Lets say we need add a new entity called queue_server which will run rabbitmq. T
 Then edit your 'pillar/top.sls' and point jupiter to use 'openstack_cluster.sls'
 
 <pre>
-havana:
+icehouse:
   mercury: [openstack_cluster]
   venus: [openstack_cluster]
   jupiter: [openstack_cluster]
@@ -311,7 +311,7 @@ Adding a new machine to a cluster is as easy as editing a json file. All you hav
 Then edit your 'pillar/top.sls' and point saturn to use 'openstack_cluster.sls'
 
 <pre>
-havana:
+icehouse:
   mercury: [openstack_cluster]
   venus: [openstack_cluster]
   jupiter: [openstack_cluster]
@@ -373,7 +373,7 @@ The default configuration will install a vlan mode network. Have a close look at
 	}
     }
 </pre>
-For each node "venus", "mercury" etc you specify the physical_networks, the start and end vlan id in that physnet, the bridge that is connected to the physnet and the interface that should be present in the brdige. For flat network do not provide any start and end vlan. 
+For each node "venus", "mercury" etc you specify the physical_networks, the start and end vlan id in that physnet, the bridge that is connected to the physnet and the interface that should be present in the bridge. For flat network do not provide any start and end vlan. 
 
 
 OVS GRE mode networking
@@ -409,7 +409,7 @@ Removing a node
 Change the file 'pillar_root/top.sls' from 
 
 <pre>
-havana:
+icehouse:
   hawk:
     - openstack_cluster
   lammer:
@@ -417,7 +417,7 @@ havana:
 </pre>
 to
 <pre>
-havana:
+icehouse:
   hawk:
     - openstack_cluster_inverse
   lammer:
