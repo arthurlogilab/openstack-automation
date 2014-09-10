@@ -36,9 +36,11 @@ nova-consoleauth:
 python-novaclient:
   pkg:
     - installed
+{% if grains['os'] == 'Ubuntu' %}
 nova-ajax-console-proxy:
   pkg:
     - installed
+{% endif %}
 novnc:
   pkg:
     - installed
@@ -95,6 +97,7 @@ nova-conf:
           neutron_metadata_proxy_shared_secret: "{{ pillar['neutron']['metadata_secret'] }}"
           vif_plugging_is_fatal: "False"
           vif_plugging_timeout: "0"
+          debug: "{{ pillar['neutron']['debug'] }}"
         keystone_authtoken: 
           auth_protocol: "http"
           admin_user: "nova"
