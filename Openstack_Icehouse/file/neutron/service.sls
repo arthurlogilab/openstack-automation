@@ -23,6 +23,7 @@ neutron-dhcp-agent:
           dhcp_driver: neutron.agent.linux.dhcp.Dnsmasq
           interface_driver: neutron.agent.linux.interface.OVSInterfaceDriver
           use_namespaces: True
+          debug: "{{ pillar['neutron']['debug'] }}"
     - require: 
       - file: neutron-dhcp-agent
 neutron-metadata-agent: 
@@ -109,8 +110,8 @@ neutron-service-conf:
           rabbit_host: {{ salt['cluster_ops.get_candidate']('queue.' + pillar['queue-engine']) }}
           auth_strategy: keystone
           rpc_backend: neutron.openstack.common.rpc.impl_kombu
-          core_plugin: ml2
-          service_plugins: router
+          core_plugin: neutron.plugins.ml2.plugin.Ml2Plugin
+          service_plugins: neutron.services.l3_router.l3_router_plugin.L3RouterPlugin
           allow_overlapping_ips: True
           verbose: True
         keystone_authtoken: 
