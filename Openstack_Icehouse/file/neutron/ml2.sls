@@ -1,6 +1,12 @@
+include:
+  - neutron.openvswitch
+
 neutron-plugin-ml2:
   pkg:
     - installed
+    {% if grains['os'] == 'Debian' %}
+    - name : neutron-common
+    {% endif %}
   file:
     - managed
     - name: /etc/neutron/plugins/ml2/ml2_conf.ini
@@ -59,12 +65,18 @@ intergrationg_bridge:
   cmd:
     - run
     - name: "ovs-vsctl add-br {{ pillar['neutron'].get('intergration_bridge', 'br-int') }}"
+    - unless: "ovs-vsctl br-exists {{ pillar['neutron'].get('intergration_bridge', 'br-int') }}"
+    - require:
+      - pkg : openvswitch-switch
 {% for network_type in ['vlan', 'flat'] %}
 {% for external_network in pillar['neutron']['type_drivers'].get(network_type, {}).get(grains['id'], {}) %}
 {{ network_type }}-{{ external_network }}-bridge-create:
   cmd:
     - run
     - name: "ovs-vsctl add-br {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }}"
+    - unless: "ovs-vsctl br-exists {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }}"
+    - require:
+      - pkg : openvswitch-switch
 {{ network_type }}-{{ external_network }}-interface-setup:
   cmd:
     - run
@@ -73,5 +85,8 @@ intergrationg_bridge:
   cmd:
     - run
     - name: "ovs-vsctl add-port {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }} {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['interface'] }}"
+    - unless: "ovs-vsctl list-ports {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['bridge'] }} | grep {{ pillar['neutron']['type_drivers'][network_type][grains['id']][external_network]['interface'] }}"
+    - require:
+      - pkg : openvswitch-switch
 {% endfor %}
 {% endfor %}
