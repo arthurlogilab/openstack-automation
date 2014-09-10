@@ -26,8 +26,8 @@ neutron-ovs-conf:
           service_neutron_metadata_proxy: true
           auth_strategy: keystone
           rpc_backend: neutron.openstack.common.rpc.impl_kombu
-          core_plugin: ml2
-          service_plugins: router
+          core_plugin: neutron.plugins.ml2.plugin.Ml2Plugin
+          service_plugins: neutron.services.l3_router.l3_router_plugin.L3RouterPlugin
           allow_overlapping_ips: True
           verbose: True
         keystone_authtoken: 
