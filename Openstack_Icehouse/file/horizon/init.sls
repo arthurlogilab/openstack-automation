@@ -6,14 +6,33 @@ apache2:
   service: 
     - running
     - watch: 
-      - file: enable-dashboard
+      - file: enable-dashboard-ssl
       - pkg: libapache2-mod-wsgi
-enable-dashboard: 
-  file: 
-    - symlink
+enable-redirect:
+  cmd.run:
+    - name : 'a2enmod rewrite'
+    - unless : 'ls /etc/apache2/mods-enabled/rewrite.load'
+enable-ssl:
+  cmd.run:
+    - name : 'a2enmod ssl'
+    - unless : 'ls /etc/apache2/mods-enabled/ssl.load'
+disable-default:
+  file.absent:
+    - name : /etc/apache2/sites-enabled/000-default
+    - require: 
+      - pkg: openstack-dashboard
+enable-dashboard-ssl-redirect:
+  file.symlink:
     - force: true
-    - name: /etc/apache2/conf-enabled/openstack-dashboard.conf
-    - target: /etc/apache2/conf-available/openstack-dashboard.conf
+    - name: /etc/apache2/sites-enabled/openstack-dashboard-ssl-redirect.conf
+    - target: /etc/apache2/sites-available/openstack-dashboard-ssl-redirect.conf
+    - require: 
+      - pkg: openstack-dashboard
+enable-dashboard-ssl: 
+  file.symlink:
+    - force: true
+    - name: /etc/apache2/sites-enabled/openstack-dashboard-ssl.conf
+    - target: /etc/apache2/sites-available/openstack-dashboard-ssl.conf
     - require: 
       - pkg: openstack-dashboard
 libapache2-mod-wsgi: 
