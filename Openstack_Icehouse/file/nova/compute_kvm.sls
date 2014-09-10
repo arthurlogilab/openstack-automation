@@ -68,6 +68,7 @@ nova-conf:
           security_group_api: neutron
           vif_plugging_is_fatal: False
           vif_plugging_timeout: 0
+          libvirt_cpu_mode: {{ pillar['services']['compute']['libvirt_cpu_mode'] }} 
         keystone_authtoken: 
           auth_uri: {{ salt['cluster_ops.get_candidate']('keystone') }}:5000
           auth_port: 35357
