@@ -77,6 +77,8 @@ nova-conf:
           admin_user: nova
           admin_password: {{ pillar['keystone']['tenants']['service']['users']['nova']['password'] }}
           auth_host: {{ salt['cluster_ops.get_candidate']('keystone') }}
+        spice:
+          html5proxy_base_url: http://{{ salt['cluster_ops.get_candidate']('nova') }}:6082/spice_auto.html
         database: 
           connection: mysql://{{ pillar['mysql'][pillar['services']['nova']['db_name']]['username'] }}:{{ pillar['mysql'][pillar['services']['nova']['db_name']]['password'] }}@{{ salt['cluster_ops.get_candidate']('mysql') }}/{{ pillar['services']['nova']['db_name'] }}
     - require: 
